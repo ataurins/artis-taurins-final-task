@@ -8,7 +8,7 @@ on:
   
 jobs:
   test:
-    name: Playwright Intermedate task
+    name: Run Tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
