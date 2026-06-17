@@ -1,13 +1,13 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { User } from '../../utils/generateUser';
+import { BaseShopPage } from './BaseShopPage';
 
-export class CheckoutPage {
-    readonly page: Page;
+export class CheckoutPage extends BaseShopPage{
     readonly deliveryAddress: Locator;
     readonly placeOrderButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.deliveryAddress = page.locator('#address_delivery');
         this.placeOrderButton = page.getByRole('link', { name: 'Place Order' });
     }

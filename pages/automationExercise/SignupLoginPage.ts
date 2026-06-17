@@ -1,14 +1,14 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { User } from '../../utils/generateUser';
+import { BaseShopPage } from './BaseShopPage';
 
-export class SignupLoginPage {
-    readonly page: Page;
+export class SignupLoginPage extends BaseShopPage {
     readonly signupNameInput: Locator;
     readonly signupEmailInput: Locator;
     readonly signupButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.signupNameInput = page.locator('input[data-qa="signup-name"]');
         this.signupEmailInput = page.locator('input[data-qa="signup-email"]');
         this.signupButton = page.locator('button[data-qa="signup-button"]');

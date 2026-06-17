@@ -1,30 +1,26 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BaseShopPage } from './BaseShopPage';
 
-export class ShopHomePage {
-    readonly page: Page;
-    readonly consentButton: Locator;
+export class ShopHomePage extends BaseShopPage {
     readonly signupLoginLink: Locator;
     readonly loggedInUserText: Locator;
     readonly productsLink: Locator;
+    readonly emailInput: Locator;
+    readonly subscribeButton: Locator;
+    readonly subscriptionSuccessMessage: Locator;
 
     constructor(page: Page) {
-        this.page = page;
-        this.consentButton = page.getByRole('button', { name: 'Consent' });
+        super(page);
         this.signupLoginLink = page.locator('a[href="/login"]');
         this.productsLink = page.locator('a[href="/products"]');
         this.loggedInUserText = page.locator('.shop-menu a:has-text("Logged in as")');
+        this.emailInput = page.getByPlaceholder('Your email address');
+        this.subscribeButton = page.locator('button#subscribe');
+        this.subscriptionSuccessMessage = page.locator('text="You have been successfully subscribed!"');
     }
 
     async goto() {
         await this.page.goto('/');
-        await this.dismissConsentBanner();
-    }
-
-    async dismissConsentBanner() {
-        try {
-            await this.consentButton.waitFor({ state: 'visible', timeout: 3000 });
-            await this.consentButton.click();
-        } catch (e) {}
     }
 
     async assertOnHomePage() {
@@ -42,6 +38,26 @@ export class ShopHomePage {
 
     async clickProducts() {
         await this.productsLink.click();
+    }
+
+    async scrollToSubscription() {
+        await this.emailInput.scrollIntoViewIfNeeded();
+    }
+
+    async fillSubscriptionEmail(email: string) {
+        await this.emailInput.fill(email);
+    }
+
+    async clickSubscribe() {
+        await this.subscribeButton.click();
+    }
+
+    async assertSubscriptionSuccessMessageVisible() {
+        await expect(this.subscriptionSuccessMessage).toBeVisible();
+    }
+
+    async assertSubscriptionInputIsCleared() {
+        await expect(this.emailInput).toBeEmpty();
     }
 
 }

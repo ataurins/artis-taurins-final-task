@@ -1,8 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { User } from '../../utils/generateUser';
+import { BaseShopPage } from './BaseShopPage';
 
-export class AccountCreationPage {
-    readonly page: Page;
+export class AccountCreationPage extends BaseShopPage {
     readonly genderTitle: Locator;
     readonly password: Locator;
     readonly dateOfBirthDay: Locator;
@@ -22,7 +22,7 @@ export class AccountCreationPage {
     readonly accountCreatedContinueButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.genderTitle = page.getByRole('radio', { name: 'Mr.' })
         this.password = page.locator('#password');
         this.dateOfBirthDay = page.locator('#days');

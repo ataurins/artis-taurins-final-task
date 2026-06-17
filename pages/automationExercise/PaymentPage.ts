@@ -1,8 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CARD_DETAILS } from '../../utils/constants';
+import { BaseShopPage } from './BaseShopPage';
 
-export class PaymentPage {
-    readonly page: Page;
+export class PaymentPage extends BaseShopPage {
     readonly nameOnCard: Locator;
     readonly cardNumber: Locator;
     readonly cvc: Locator;
@@ -12,7 +12,7 @@ export class PaymentPage {
 
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.nameOnCard = page.locator('input[data-qa="name-on-card"]');
         this.cardNumber = page.locator('input[data-qa="card-number"]');
         this.cvc = page.locator('input[data-qa="cvc"]');
