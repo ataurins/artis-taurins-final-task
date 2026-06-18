@@ -47,5 +47,4 @@ export class CartPage extends BaseShopPage{
     async assertCartIsEmptyMessageVisible() {
         await expect(this.cartEmptyMessage).toContainText("Cart is empty!");
     }
-
 }

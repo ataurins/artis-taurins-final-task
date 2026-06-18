@@ -59,5 +59,4 @@ export class ShopHomePage extends BaseShopPage {
     async assertSubscriptionInputIsCleared() {
         await expect(this.emailInput).toBeEmpty();
     }
-
 }

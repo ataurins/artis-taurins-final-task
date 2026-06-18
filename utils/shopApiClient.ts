@@ -27,6 +27,7 @@ export class ShopApiClient {
 
     async getProducts(): Promise<ProductsResponse> {
         const response = await this.request.get(`${BASE_URL}/productsList`);
+        
         return (await response.json()) as ProductsResponse;
     }
 

@@ -10,7 +10,6 @@ export class PaymentPage extends BaseShopPage {
     readonly expirationYear: Locator;
     readonly payAndConfirmButton: Locator;
 
-
     constructor(page: Page) {
         super(page);
         this.nameOnCard = page.locator('input[data-qa="name-on-card"]');

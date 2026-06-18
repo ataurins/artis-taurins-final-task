@@ -75,17 +75,16 @@ test.describe('Automation Exercise Shop', () => {
         await productsPage.assertAllProductsContainKeyword(productName);
     });
 
-    test('TC-SHOP-003 — Cart: adding multiple products updates the item count', async ({ page }) => {
+    test('TC-SHOP-003 — Cart: adding multiple products updates the item count', async ({ authenticatedShopPage }) => {
         await epic("Shopping");
         await feature("Cart");
         await story("Add multiple products");
         await severity("normal");
         
-        const homePage = new ShopHomePage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-
-        await homePage.goto();
+        const homePage = new ShopHomePage(authenticatedShopPage);
+        const productsPage = new ProductsPage(authenticatedShopPage);
+        const cartPage = new CartPage(authenticatedShopPage);
+        const checkoutPage = new CheckoutPage(authenticatedShopPage);
 
         // Failing because nothing is found for Fetch API
         // const responsePromise = page.waitForResponse('**/api/productsList');
@@ -108,7 +107,11 @@ test.describe('Automation Exercise Shop', () => {
         await cartPage.assertCartRowCount(2);
         await cartPage.assertCartRow(0, product1.name, product1.price, 1);
         await cartPage.assertCartRow(1, product2.name, product2.price, 1);
-        // No total sum visible on screen to validate
+
+        // No total sum visible on screen, proceeding to checkout to validate sum
+        await cartPage.clickProceedToCheckout();
+        await checkoutPage.assertOnCheckoutPage();
+        await checkoutPage.validateTotalSum([product1, product2]);
     });
 
     test('TC-SHOP-004 — Cart: removing a product updates the cart', async ({ page }) => {
